@@ -1,13 +1,2 @@
-export const LICENSING_CONFIG = {
-  storeId: '',
-  storeSlug: '',
-  products: {
-    PngForge: { productId: 0, variantId: 0, name: 'PngForge Pro', price: 3 },
-  } as Record<string, { productId: number; variantId: number; name: string; price: number }>,
-  isDev: import.meta.env.DEV,
-  lsApiBase: 'https://api.lemonsqueezy.com/v1',
-  wise: {
-    email: 'teddzfr@proton.me',
-    currency: 'USD',
-  },
-};
+export const APP_NAME = 'PngForge';
+export const STUDIO_PASS_URL = 'https://frteddz.github.io/Euthenia-Studio-Website/studio-pass';
