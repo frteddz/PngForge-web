@@ -1,11 +1,11 @@
 const FEATURES = [
   { icon: '🖼️', title: 'PNG', desc: 'Lossless PNG conversion' },
   { icon: '📷', title: 'JPG', desc: 'Compressed JPEG output' },
-  { icon: '🌐', title: 'WebP', desc: 'Modern WebP format' },
-  { icon: '🚀', title: 'AVIF', desc: 'Next-gen AVIF images' },
+  { icon: '🌐', title: 'WebP', desc: 'Modern WebP format', pro: true },
+  { icon: '🚀', title: 'AVIF', desc: 'Next-gen AVIF images', pro: true },
   { icon: '📂', title: 'Drag & Drop', desc: 'Intuitive file loading' },
-  { icon: '📁', title: 'Folder Conversion', desc: 'Batch process folders' },
-  { icon: '📦', title: 'Compression', desc: 'Adjustable quality' },
+  { icon: '📁', title: 'Folder Conversion', desc: 'Batch process folders', pro: true },
+  { icon: '📦', title: 'Compression', desc: 'Adjustable quality', pro: true },
   { icon: '👁️', title: 'Quality Preview', desc: 'Side-by-side comparison' },
 ];
 
@@ -88,8 +88,28 @@ export function HomePage({ onNavigate }: HomePageProps) {
               border: '1px solid var(--color-border)',
               textAlign: 'center',
               transition: 'all var(--transition-normal)',
+              position: 'relative',
             }}
           >
+            {feature.pro && (
+              <span
+                style={{
+                  position: 'absolute',
+                  top: '0.375rem',
+                  right: '0.375rem',
+                  fontSize: '0.625rem',
+                  fontWeight: 600,
+                  padding: '0.125rem 0.375rem',
+                  borderRadius: 'var(--radius-sm)',
+                  background: 'var(--color-warning-light)',
+                  color: 'var(--color-warning)',
+                  textTransform: 'uppercase',
+                  letterSpacing: '0.04em',
+                }}
+              >
+                Pro
+              </span>
+            )}
             <div style={{ fontSize: '1.5rem', marginBottom: '0.375rem' }}>{feature.icon}</div>
             <p style={{ fontWeight: 600, fontSize: '0.875rem', color: 'var(--color-text)', marginBottom: '0.125rem' }}>
               {feature.title}

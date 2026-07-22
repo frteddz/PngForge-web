@@ -4,8 +4,12 @@ import { FormatSelector } from '../components/FormatSelector';
 import { CompressionSlider } from '../components/CompressionSlider';
 import { FileList } from '../components/FileList';
 import { ProgressBar } from '../components/ProgressBar';
+import { FeatureGate } from '../licensing/FeatureGate';
+import { useLicense } from '../licensing/LicenseProvider';
 import { useConversion } from '../hooks/useConversion';
 import type { ConvertFileItem } from '../hooks/useConversion';
+
+const FREE_BATCH_LIMIT = 3;
 
 export function ConvertPage() {
   const {
@@ -25,8 +29,15 @@ export function ConvertPage() {
     error,
     setError,
   } = useConversion();
+  const { isPro, setShowProModal } = useLicense();
 
-  const handleFilesAdded = useCallback((incoming: File[]) => addFiles(incoming), [addFiles]);
+  const handleFilesAdded = useCallback((incoming: File[]) => {
+    if (!isPro && files.length + incoming.length > FREE_BATCH_LIMIT) {
+      setShowProModal(true);
+      return;
+    }
+    addFiles(incoming);
+  }, [addFiles, files.length, isPro, setShowProModal]);
   const handleDownload = useCallback((item: ConvertFileItem) => downloadFile(item), [downloadFile]);
   const doneFiles = useMemo(() => files.filter((f) => f.status === 'done'), [files]);
   const lastDoneFile = useMemo(() => doneFiles[doneFiles.length - 1] ?? null, [doneFiles]);
@@ -119,7 +130,9 @@ export function ConvertPage() {
               </button>
             </div>
             <FormatSelector value={format} onChange={setFormat} disabled={isConverting} />
-            <CompressionSlider value={compression} onChange={setCompression} disabled={isConverting} />
+            <FeatureGate feature="Quality Controls">
+              <CompressionSlider value={compression} onChange={setCompression} disabled={isConverting} />
+            </FeatureGate>
           </div>
 
           <FileList files={files} onRemove={removeFile} onDownload={handleDownload} disabled={isConverting} />
