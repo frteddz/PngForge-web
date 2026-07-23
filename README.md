@@ -2,6 +2,8 @@
 
 > Batch image converter — convert PNG, JPG, WebP, and AVIF with drag-and-drop simplicity.
 
+This repository contains only the built distribution files. The source code is not publicly available.
+
 ## Features
 
 - Convert between PNG, JPG, WebP, and AVIF formats
